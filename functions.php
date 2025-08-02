@@ -159,3 +159,5 @@ require_once get_template_directory() . '/template-parts/head-meta.php';
 add_action('wp_head', function () {
   get_template_part('template-parts/product-schema');
 });
+
+

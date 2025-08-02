@@ -69,211 +69,266 @@ if ($variant_items) {
 }
 ?>
 
-<div class="product-page-container">
-
-<!-- GALLERY GRID 3 COLUMNS: thumbs | main-image | info -->
-<?php
-$gallery_count = $gallery ? count($gallery) : 0;
-$visible_thumbs = 5;
-$thumb_height = 80;
-$gap = 12;
-$max_height = $thumb_height * $visible_thumbs + ($visible_thumbs - 1) * $gap;
-?>
-<?php if ($gallery && $gallery_count > 0): ?>
-  <div class="product-gallery-3col">
-    <!-- Left: Thumbnails -->
-    <div class="product-thumbnails" style="height:<?php echo $max_height; ?>px;">
-      <?php if ($gallery_count > $visible_thumbs): ?>
-        <button id="thumb-up" onclick="scrollThumbnails(-1)" class="thumb-arrow thumb-arrow-up hidden">↑</button>
-      <?php endif; ?>
-      <div
-        id="thumbnail-container"
-        class="thumbnails-list"
-        style="max-height:<?php echo $max_height; ?>px;"
-        onscroll="handleThumbScroll()"
-      >
-        <?php foreach ($gallery as $index => $image): ?>
-          <div class="thumb-item">
-            <img
-              src="<?php echo esc_url($image['sizes']['thumbnail']); ?>"
-              alt="<?php echo esc_attr($image['alt']); ?>"
-              class="thumb-img"
-              onclick="document.getElementById('main-image').src='<?php echo esc_url($image['sizes']['large']); ?>'"
-            />
-          </div>
-        <?php endforeach; ?>
-      </div>
-      <?php if ($gallery_count > $visible_thumbs): ?>
-        <button id="thumb-down" onclick="scrollThumbnails(1)" class="thumb-arrow thumb-arrow-down">↓</button>
-      <?php endif; ?>
+<!-- Main Content -->
+<main class="main-content">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-container">
+        <nav class="breadcrumb">
+            <a href="#" class="breadcrumb-link">Furniture</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="#" class="breadcrumb-link">Sofas & armchairs</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="#" class="breadcrumb-link">Armchairs & footstools</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Lamino arm chair oiled oak/sheep skin</span>
+        </nav>
     </div>
-    <!-- Center: Main Image -->
-    <div class="main-image-block" style="height:<?php echo $max_height; ?>px;">
-      <img
-        id="main-image"
-        src="<?php echo esc_url($gallery[0]['url']); ?>"
-        alt="<?php echo esc_attr($gallery[0]['alt']); ?>"
-        class="main-image"
-      />
-    </div>
-    <!-- Right: Info -->
-    <div class="product-info-col">
-      <h1 class="product-title"><?php echo esc_html($product_name); ?></h1>
-      <?php if ($product_subtitle): ?>
-        <h2 class="product-subtitle"><?php echo esc_html($product_subtitle); ?></h2>
-      <?php endif; ?>
-      <?php if ($description): ?>
-        <div class="product-description"><?php echo wp_kses_post($description); ?></div>
-      <?php endif; ?>
-      <!-- Place here any other info, designer, cta, etc. -->
-      <?php if ($designer_name): ?>
-        <div class="product-designer">
-          <h3 class="designer-title">Designer</h3>
-          <p class="designer-name"><?php echo esc_html($designer_name); ?></p>
-          <?php if ($designer_bio): ?>
-            <p class="designer-bio"><?php echo esc_html($designer_bio); ?></p>
-          <?php endif; ?>
-        </div>
-      <?php endif; ?>
-      <?php if ($cta_label && $cta_base_url): ?>
-        <div class="product-cta">
-          <a href="<?php echo esc_url($cta_base_url . '?' . $cta_url_params); ?>" class="cta-button">
-            <?php echo esc_html($cta_label); ?>
-          </a>
-        </div>
-      <?php endif; ?>
-    </div>
-  </div>
-  <script>
-    // JS for gallery thumbs
-    const container = document.getElementById('thumbnail-container');
-    const thumbUp = document.getElementById('thumb-up');
-    const thumbDown = document.getElementById('thumb-down');
-    const thumbHeight = 80 + 12;
 
-    function scrollThumbnails(direction) {
-      container.scrollBy({ top: thumbHeight * direction, behavior: 'smooth' });
-      setTimeout(handleThumbScroll, 300);
-    }
-    function handleThumbScroll() {
-      if (thumbUp) {
-        if (container.scrollTop > 10) {
-          thumbUp.classList.remove('hidden');
-        } else {
-          thumbUp.classList.add('hidden');
-        }
-      }
-      if (thumbDown) {
-        if (container.scrollHeight - container.scrollTop <= container.clientHeight + 10) {
-          thumbDown.classList.add('hidden');
-        } else {
-          thumbDown.classList.remove('hidden');
-        }
-      }
-    }
-    if (container) {
-      container.addEventListener('scroll', handleThumbScroll);
-      document.addEventListener('DOMContentLoaded', handleThumbScroll);
-    }
-  </script>
-<?php else: ?>
-  <!-- No images fallback -->
-  <div class="product-noimage-block">
-    <div class="noimage-inner">
-      <!-- SVG ICON -->
-      <svg class="noimage-svg" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M3 16.5V8.25A2.25 2.25 0 015.25 6h13.5A2.25 2.25 0 0121 8.25v8.25m-18 0A2.25 2.25 0 005.25 19.5h13.5A2.25 2.25 0 0021 17.25m-18 0v-1.128a.75.75 0 01.28-.585l3.968-3.174a.75.75 0 01.944 0l2.224 1.78a.75.75 0 00.944 0l3.56-2.848a.75.75 0 01.944 0l3.89 3.112a.75.75 0 01.28.585V17.25">
-        </path>
-      </svg>
-      <p class="noimage-text">Product image coming soon</p>
-    </div>
-  </div>
-<?php endif; ?>
-
-<!-- Остальной контент (описание, specs, sustainability, shipping, variants, breadcrumbs) ниже не трогается -->
-
-<?php if ($specifications): ?>
-  <div class="product-specs">
-    <h3 class="specs-title">Specifications</h3>
-    <ul class="specs-list">
-      <?php foreach ($specifications as $spec): ?>
-        <li>
-          <?php echo esc_html($spec['label']); ?>:
-          <?php echo esc_html($spec['value']); ?>
-        </li>
-      <?php endforeach; ?>
-    </ul>
-  </div>
-<?php endif; ?>
-
-<?php if ($sustainability): ?>
-  <div class="product-sustainability">
-    <h3 class="sustainability-title">Sustainability</h3>
-    <div class="sustainability-desc">
-      <?php echo wp_kses_post($sustainability); ?>
-    </div>
-  </div>
-<?php endif; ?>
-
-<?php if ($shipping_info): ?>
-  <div class="product-shipping">
-    <h3 class="shipping-title">Shipping & Returns</h3>
-    <div class="shipping-desc">
-      <?php echo wp_kses_post($shipping_info); ?>
-    </div>
-  </div>
-<?php endif; ?>
-
-<?php if (!empty($variants_data)): ?>
-  <div class="product-variants">
-    <h3 class="variants-title">Variants</h3>
-    <div class="variants-list">
-      <?php foreach ($variants_data as $variant): ?>
-        <div class="variant-item">
-          <p><strong>Name:</strong> <?php echo esc_html($variant['name']); ?></p>
-          <p><strong>Price:</strong> <?php echo esc_html($variant['price']); ?></p>
-          <p><strong>SKU:</strong> <?php echo esc_html($variant['sku']); ?></p>
-          <p><strong>Color:</strong> <?php echo esc_html($variant['color']); ?></p>
-          <p><strong>Material:</strong> <?php echo esc_html($variant['material']); ?></p>
-          <p><strong>Stock:</strong> <?php echo esc_html($variant['in_stock'] ? 'In Stock' : 'Out of Stock'); ?></p>
-          <?php if (!empty($variant['images'])): ?>
-            <div class="variant-images">
-              <?php foreach ($variant['images'] as $vimage): ?>
-                <img src="<?php echo esc_url($vimage['url']); ?>" alt="<?php echo esc_attr($vimage['alt']); ?>" class="variant-img" />
-              <?php endforeach; ?>
+    <!-- Product Section -->
+    <section class="product-section">
+        <div class="product-container">
+            <!-- Product Images -->
+            <div class="product-images">
+                <div class="thumbnail-container">
+<?php foreach ($gallery as $index => $image): ?>
+                    <div class="thumbnail active"></div>
+                    <div class="thumbnail"></div>
+                    <div class="thumbnail"></div>
+                    <div class="thumbnail"></div>
+                </div>
+                <div class="main-image">
+                    <div class="image-placeholder">Product Image</div>
+                    <button class="image-nav-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <polyline points="9,18 15,12 9,6" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
-          <?php endif; ?>
-        </div>
-      <?php endforeach; ?>
-    </div>
-  </div>
-<?php endif; ?>
-</div>
 
-<!-- Breadcrumbs block -->
-<div class="product-breadcrumbs">
-  <nav>
-    <a href="<?php echo esc_url(home_url()); ?>" class="breadcrumb-link">Home</a>
-    <?php if ($categories && !is_wp_error($categories)): ?>
-      <?php
-        $category = $categories[0];
-        $cat_link = get_term_link($category);
-      ?>
-      <span>/</span>
-      <a href="<?php echo esc_url($cat_link); ?>" class="breadcrumb-link">
-        <?php echo esc_html($category->name); ?>
-      </a>
-    <?php endif; ?>
-    <?php if ($brands && !is_wp_error($brands)): ?>
-      <?php
-        $brand = $brands[0];
-        $brand_link = get_term_link($brand);
-      ?>
-      <span>/</span>
-      <a href="<?php echo esc_url($brand_link); ?>" class="breadcrumb-link">
-        <?php echo esc_html($brand->name); ?>
-      </a>
-    <?php endif; ?>
-  </nav>
-</div>
+            <!-- Product Info -->
+            <div class="product-info">
+                <div class="product-meta">
+                    <span>Yngve Ekström</span>
+                    <span>for</span>
+                    <span>Swedese</span>
+                </div>
+
+                <h1 class="product-title">
+                    Lamino arm chair oiled oak/sheep skin<br>
+                    <span class="product-variant">Sahara (nougat brown)</span>
+                </h1>
+
+                <div class="product-rating">
+                    <div class="stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <span class="rating-text">(4.8)</span>
+                </div>
+
+                <div class="product-price">€2,419</div>
+
+                <!-- Color Selector -->
+                <div class="color-selector">
+                    <div class="color-option">
+                        <div class="color-swatch"></div>
+                        <span>Sahara (nougat brown)</span>
+                    </div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </div>
+
+                <!-- Quantity and Add to Cart -->
+                <div class="purchase-controls">
+                    <div class="quantity-selector">
+                        <button class="qty-btn">-</button>
+                        <input type="number" value="1" class="qty-input">
+                        <button class="qty-btn">+</button>
+                    </div>
+                    <button class="add-to-cart-btn">Add to basket</button>
+                </div>
+
+                <button class="favorite-btn">
+                    <span>Save as favourite</span>
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </button>
+
+                <!-- Stock Info -->
+                <div class="stock-info">
+                    <div class="stock-indicator">●</div>
+                    <span>In stock</span>
+                </div>
+
+                <!-- Shipping Info -->
+                <div class="shipping-info">
+                    <div class="shipping-content">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="1" y="3" width="15" height="13" stroke="currentColor" stroke-width="2"/>
+                            <path d="M16 8h4l3 3v5h-7V8z" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="5.5" cy="18.5" r="2.5" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="18.5" cy="18.5" r="2.5" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <span>Free shipping to България</span>
+                    </div>
+                    <a href="#" class="shipping-link">Shipping info</a>
+                </div>
+
+                <!-- Product Details Grid -->
+                <div class="product-details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Sheep-skin</span>
+                        <div class="detail-icon">🐑</div>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Country of origin</span>
+                        <span class="detail-value">Sweden</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Designed Year</span>
+                        <span class="detail-value">1956</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section">
+        <div class="reviews-container">
+            <h2 class="section-title">Reviews</h2>
+
+            <div class="reviews-content">
+                <div class="reviews-summary">
+                    <div class="rating-large">4.8</div>
+                    <div class="rating-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="rating-count">Based on 23 reviews</span>
+                    </div>
+
+                    <div class="rating-distribution">
+                        <div class="rating-bar">
+                            <span class="rating-label">★ 5</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 91%"></div>
+                            </div>
+                            <span class="rating-count">21</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span class="rating-label">★ 4</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <span class="rating-count">0</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span class="rating-label">★ 3</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 4%"></div>
+                            </div>
+                            <span class="rating-count">1</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span class="rating-label">★ 2</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 4%"></div>
+                            </div>
+                            <span class="rating-count">1</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span class="rating-label">★ 1</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <span class="rating-count">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reviews-list">
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-stars">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <span class="review-date">2024-12-28</span>
+                        </div>
+                        <div class="review-content">
+                            <h4 class="review-title">Beautiful and comfortable</h4>
+                            <div class="review-author">Jane G</div>
+                        </div>
+                    </div>
+
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-stars">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <span class="review-date">2022-12-01</span>
+                        </div>
+                        <div class="review-content">
+                            <h4 class="review-title">Stylish and gorgeous</h4>
+                            <p class="review-text">I've always loved this chair and brought one 7 years ago and have had to get another one as my cat is obsessed with it. It looks amazing but it's also so comfy as well.</p>
+                        </div>
+                    </div>
+
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-stars">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <span class="review-date">2022-10-24</span>
+                        </div>
+                        <div class="review-content">
+                            <p class="review-text">Classic design. Light and easy to move around yet reassuring sturdy. Ergonomic and supportive.</p>
+                            <div class="review-author">David P</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="newsletter-container">
+            <h4 class="newsletter-title">Sign-up to our newsletter and get 5% off your first order*</h4>
+            <div class="newsletter-form">
+                <input type="email" placeholder="E-mail" class="newsletter-input">
+                <button class="newsletter-btn">SIGN UP</button>
+            </div>
+            <p class="newsletter-disclaimer">
+                After you have registered for the newsletter, you will receive an email with a 5%<br>
+                discount code. The discount code cannot be used in combination with other discount<br>
+                codes. With the newsletter you can take advantage of our exclusive offers, discover our<br>
+                new arrivals and you will receive inspiration and tips on everything from interior design<br>
+                to table setting. You can unsubscribe at any time.
+            </p>
+        </div>
+    </section>
+</main>
+
+
+<?php get_footer(); ?>
