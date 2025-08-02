@@ -96,6 +96,7 @@ if ($variant_items) {
                     <div class="thumbnail"></div>
                     <div class="thumbnail"></div>
                 </div>
+                <?php endforeach; ?>
                 <div class="main-image">
                     <div class="image-placeholder">Product Image</div>
                     <button class="image-nav-btn">
