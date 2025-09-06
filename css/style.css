@@ -218,6 +218,73 @@ body {
     color: #666;
 }
 
+
+
+
+/* Mobile menu */
+.mobile-menu {
+    position: fixed;
+    inset: 0;
+    display: none;
+    z-index: 1000;
+}
+.mobile-menu.active {
+    display: block;
+}
+
+.menu-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+}
+
+.menu-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80%;
+    max-width: 300px;
+    height: 100%;
+    background: #fff;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.menu-close {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+}
+
+.menu-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+.menu-nav li {
+    margin-bottom: 0.5rem;
+}
+.menu-nav a, .menu-nav button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 0.5rem 0;
+    font-size: 1rem;
+}
+
+.menu-bottom {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+
 /* Main Content */
 .main-content {
     max-width: 1440px;
