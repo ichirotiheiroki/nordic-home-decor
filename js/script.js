@@ -1,4 +1,47 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+
+    //Burger btn scripts
+
+    const burgerBtn = document.querySelector('.toggle-sidebar-menu-button');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeBtn = document.querySelector('.menu-close');
+    const overlay = document.querySelector('.menu-overlay');
+
+    burgerBtn.addEventListener('click', () => {
+        mobileMenu.classList.add('active');
+    });
+
+    closeBtn.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+    });
+
+    overlay.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+    });
+
+
+    //Variants
+
+    const currentVariant = document.querySelector('.color-selector');
+
+    if (currentVariant) {
+
+        const variantsContainer = document.getElementById('variantsContainer');
+        const allVariants = variantsContainer.querySelectorAll('.variant-option');
+        currentVariant.addEventListener('click', () => {
+            variantsContainer.classList.toggle('active');
+        });
+
+        allVariants.forEach(variant => {
+            variant.addEventListener('click', () => {
+                variantsContainer.classList.remove('active');
+            })
+        })
+
+    }
+
+
     // Quantity selector functionality
     const qtyBtns = document.querySelectorAll('.qty-btn');
     const qtyInput = document.querySelector('.qty-input');
@@ -20,9 +63,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     thumbnails.forEach((thumbnail, index) => {
         thumbnail.addEventListener('click', function () {
-            // Remove active class from all thumbnails
+
             thumbnails.forEach(t => t.classList.remove('active'));
-            // Add active class to clicked thumbnail
+
             this.classList.add('active');
         });
     });
@@ -32,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (addToCartBtn) {
         addToCartBtn.addEventListener('click', function () {
-            // Simple feedback
+
             const originalText = this.textContent;
             this.textContent = 'Added!';
             this.style.backgroundColor = '#45b382';
@@ -113,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Mobile menu toggle (basic implementation)
+    // Mobile menu toggle
     const menuBtn = document.querySelector('.action-btn:last-child');
     const navigation = document.querySelector('.navigation');
 
@@ -137,27 +180,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Simple image gallery navigation
+    // image gallery navigation
     const imageNavBtn = document.querySelector('.image-nav-btn');
     let currentImageIndex = 0;
     const totalImages = 3; // Assuming 3 images
 
     if (imageNavBtn) {
-    imageNavBtn.addEventListener('click', function () {
-        currentImageIndex = (currentImageIndex + 1) % totalImages;
-        // In a real implementation, you would change the main image source here
-        console.log(`Showing image ${currentImageIndex + 1}`);
-    });}
+        imageNavBtn.addEventListener('click', function () {
+            currentImageIndex = (currentImageIndex + 1) % totalImages;
+            // In a real implementation, you would change the main image source here
+            console.log(`Showing image ${currentImageIndex + 1}`);
+        });
+    }
 
-    // Color selector dropdown simulation
-    const colorSelector = document.querySelector('.color-selector');
 
-    if (colorSelector) {
-    colorSelector.addEventListener('click', function () {
-        alert('Color options would be shown here');
-    });}
 
-    // Review interactions (like/dislike)
     document.querySelectorAll('.review-item').forEach(review => {
         // Add simple interaction buttons to reviews
         const reviewContent = review.querySelector('.review-content');
@@ -174,7 +211,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Handle review action buttons
     document.addEventListener('click', function (e) {
         if (e.target.classList.contains('review-action-btn')) {
             const action = e.target.dataset.action;
@@ -190,7 +226,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// Add some CSS for the dynamically created review actions
 const style = document.createElement('style');
 style.textContent = `
     .review-actions {

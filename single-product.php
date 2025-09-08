@@ -57,13 +57,13 @@ $variants_data = [];
 if ($variant_items) {
     foreach ($variant_items as $variant) {
         $variants_data[] = [
-            'name' => $variant['variant_name'],
-            'price' => $variant['variant_price'],
-            'sku' => $variant['variant_sku'],
-            'color' => $variant['variant_color'],
-            'material' => $variant['variant_material'],
-            'in_stock' => $variant['variant_in_stock'],
-            'images' => $variant['variant_images'],
+                'name' => $variant['variant_name'],
+                'price' => $variant['variant_price'],
+                'sku' => $variant['variant_sku'],
+                'color' => $variant['variant_color'],
+                'material' => $variant['variant_material'],
+                'in_stock' => $variant['variant_in_stock'],
+                'images' => $variant['variant_images'],
         ];
     }
 }
@@ -159,6 +159,19 @@ if ($variant_items) {
                         <?php echo esc_html($product_name); ?><br>
                         <span class="product-variant">Sahara (nougat brown)</span>
                     </h1>
+
+                    <div class="product-price">Price: €2,419</div>
+
+                    <div class="product-rating">
+                        <div class="stars">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                        <span class="rating-text">(4.8)</span>
+                    </div>
                     <?php if ($product_subtitle): ?>
                         <h2 class="product-subtitle"><?php echo esc_html($product_subtitle); ?></h2>
                     <?php endif; ?>
@@ -174,29 +187,42 @@ if ($variant_items) {
                             <?php endif; ?>
                         </div>
                     <?php endif; ?>
+                    <div class="product-specifications">
+                        <h3 class="specifications-title">Specifications</h3>
+                        <?php foreach ($specifications as $specification) { ?>
+                            <div class="product-specification">
 
-                    <div class="product-rating">
-                        <div class="stars">
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                        </div>
-                        <span class="rating-text">(4.8)</span>
+                                <p class="specification-label"><?php echo $specification['label']; ?>:</p>
+                                <p class="specification-value"><?php echo $specification['value']; ?></p>
+                            </div>
+                        <?php } ?>
                     </div>
 
-                    <div class="product-price">€2,419</div>
 
-                    <!-- Color Selector -->
-                    <div class="color-selector">
-                        <div class="color-option">
-                            <div class="color-swatch"></div>
-                            <span>Sahara (nougat brown)</span>
+                    <!-- Variant Selector -->
+                    <div class="color-selector-container">
+                        <div class="color-selector">
+                            <div class="color-option">
+                                <div class="color-swatch"></div>
+                                <span>Sahara (nougat brown)</span>
+                            </div>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2"/>
+                            </svg>
                         </div>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <polyline points="6,9 12,15 18,9" stroke="currentColor" stroke-width="2"/>
-                        </svg>
+                        <div id="variantsContainer" class="variants-container">
+                            <?php foreach ($variants_data as $variant) { ?>
+                                <div class="variant-option">
+                                    <p class="variant-name"><?php echo $variant['name']; ?></p>
+                                    <p class="variant-color">Color: <?php echo $variant['color']; ?></p>
+                                    <p class="variant-price">Price: <?php echo $variant['price']; ?></p>
+                                    <p class="variant-material">Material: <?php echo $variant['material']; ?></p>
+                                    <p class="variant-sku"> In stock: <?php echo $variant['in_stock'] > 0 ? 'Yes' : 'No'; ?></p>
+                                    <p class="variant-sku">SKU: <?php echo $variant['sku']; ?></p>
+                                </div>
+                            <?php } ?>
+                        </div>
                     </div>
 
                     <!-- Quantity and Add to Cart -->
@@ -234,16 +260,18 @@ if ($variant_items) {
                                 <path stroke="#000" stroke-linecap="round" stroke-linejoin="round"
                                       d="M3.27 6.96 12 12.01l8.73-5.05M12 22.08V12"></path>
                             </svg>
-                            <span>Free shipping to България</span>
+                            <span><?php echo $shipping_info; ?></span>
                         </div>
                         <a href="#" class="shipping-link">Shipping info</a>
                     </div>
+
+ 
 
                     <!-- Product Details Grid -->
                     <div class="product-details-grid">
                         <div class="detail-item">
                             <span class="detail-label">Sheep-skin</span>
-                            <div class="detail-icon">🐑</div>
+                            <div class="detail-icon">--------</div>
                         </div>
                         <div class="detail-item">
                             <span class="detail-label">Country of origin</span>
@@ -401,7 +429,7 @@ if ($variant_items) {
             watchSlidesProgress: true,
             watchOverflow: true,
             breakpoints: {
-                768: {
+                1281: {
                     direction: 'vertical',
                 }
             }
